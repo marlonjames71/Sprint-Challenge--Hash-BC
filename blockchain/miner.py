@@ -28,7 +28,7 @@ def proof_of_work(last_proof):
     #  TODO: Your code here
     prev_hash = hashlib.sha256(str(last_proof).encode()).hexdigest()
     while valid_proof(prev_hash, proof) is False:
-        proof += randint(900)
+        proof += randint(2, 900)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -44,7 +44,7 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    guess = hashlib.sha256(proof).encode().hexdigest()
+    guess = hashlib.sha256(f'{proof}'.encode()).hexdigest()
     return guess[:6] == last_hash[-6:]
 
 
