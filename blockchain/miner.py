@@ -1,5 +1,6 @@
 import hashlib
 import requests
+from random import randint
 
 import sys
 
@@ -23,8 +24,11 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    proof = randint(50000, 10000000)
     #  TODO: Your code here
+    prev_hash = hashlib.sha256(str(last_proof).encode()).hexdigest()
+    while valid_proof(prev_hash, proof) is False:
+        proof += randint(1,971)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -40,7 +44,8 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    guess = hashlib.sha256(proof).encode().hexdigest()
+    return guess[:6] == last_hash[-6:]
 
 
 if __name__ == '__main__':
